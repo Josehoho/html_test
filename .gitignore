@@ -1,0 +1,8 @@
+.venv/
+.tmp/
+build/
+dist/
+__pycache__/
+*.spec
+*.pyc
+index.backup-*.html
