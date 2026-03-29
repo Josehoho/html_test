@@ -1,4 +1,4 @@
-﻿# Iran-monitor-mini
+# Iran-monitor-mini
 
 一个可直接本地打开的单页仪表盘，聚合展示：
 - 冲突状态与提示
