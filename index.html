@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>美伊冲突主题跟踪页</title>
+  <style>
+    :root {
+      --bg: #000000;
+      --panel: rgba(10, 10, 10, 0.92);
+      --panel-strong: rgba(0, 0, 0, 0.98);
+      --text: #ffffff;
+      --muted: #888888;
+      --accent: #ffc402;
+      --accent-strong: #b98eff;
+      --line: rgba(255, 255, 255, 0.12);
+      --danger: #ffc402;
+      --ok: #ffc402;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(185, 142, 255, 0.16), transparent 30%),
+        radial-gradient(circle at top right, rgba(255, 196, 2, 0.1), transparent 24%),
+        linear-gradient(180deg, #000000, #050505 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: none;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: calc(var(--hero-offset, 0px) + 24px) 0 56px;
+    }
+
+    .hero {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1180px, calc(100% - 32px));
+      z-index: 1000;
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: #0a0a0a;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 196, 2, 0.32);
+      background: rgba(255, 196, 2, 0.08);
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: none;
+    }
+
+    .eyebrow-main {
+      color: var(--accent);
+    }
+
+    .eyebrow-day {
+      color: var(--accent);
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1;
+      vertical-align: baseline;
+      margin: 0 2px;
+    }
+
+    .hero-topline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-status-line {
+      display: inline-flex;
+      align-items: baseline;
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-status-sep {
+      margin: 0 6px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 rgba(255, 196, 2, 0.55);
+      animation: pulse-dot 1.6s ease-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse-dot {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 196, 2, 0.45);
+      }
+
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(255, 196, 2, 0);
+      }
+
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 196, 2, 0);
+      }
+    }
+
+    h1 {
+      margin: 18px 0 10px;
+      max-width: 760px;
+      font-size: clamp(34px, 5vw, 62px);
+      line-height: 1.02;
+      letter-spacing: 0.04em;
+      color: var(--accent-strong);
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .hero-bili {
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--accent-strong);
+    }
+
+    .hero-bili a {
+      color: var(--accent-strong);
+      text-decoration: none;
+      border-bottom: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .hero-bili a:hover {
+      text-decoration: none;
+    }
+
+    .hero-bili img {
+      height: 24px;
+      width: 24px;
+      display: inline-block;
+      vertical-align: middle;
+      border-radius: 4px;
+    }
+
+    .hero-bili-text {
+      margin-left: 6px;
+      color: var(--accent-strong);
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .panel {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+
+    .panel h2 {
+      margin: 0 0 14px;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      color: var(--accent-strong);
+    }
+
+    .stat-wrap {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(160deg, rgba(185, 142, 255, 0.12), rgba(16, 16, 16, 0.92));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stat .label {
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .stat .value {
+      margin-top: 10px;
+      font-size: clamp(26px, 4vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .timeline-copy {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .timeline-copy strong {
+      color: var(--accent);
+    }
+
+    .feed-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .feed-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .badge {
+      flex-shrink: 0;
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: rgba(255, 196, 2, 0.12);
+      border: 1px solid rgba(255, 196, 2, 0.2);
+      color: var(--ok);
+    }
+
+    .badge.warn {
+      color: var(--accent);
+      background: rgba(255, 196, 2, 0.1);
+      border-color: rgba(255, 196, 2, 0.2);
+    }
+
+    .main-section {
+      margin-top: 18px;
+    }
+
+    .embed-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .embed-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 24px 16px;
+    }
+
+    .embed-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .embed-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .embed-link:hover {
+      text-decoration: underline;
+    }
+
+    .sheet-wrap {
+      padding: 0 24px 24px;
+    }
+
+    .sheet-frame {
+      display: block;
+      width: 100%;
+      min-height: 640px;
+      border: 0;
+      border-radius: 18px;
+      background: #000000;
+    }
+
+    .shipping-frame {
+      min-height: 900px;
+    }
+
+    .polymarket-wrap {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      padding: 0 24px 24px;
+      align-items: stretch;
+    }
+
+    .polymarket-embed {
+      position: relative;
+      display: block;
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      height: 300px;
+    }
+
+    .polymarket-embed iframe {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: 300px;
+      min-height: 300px;
+      border: 0;
+      border-radius: 18px;
+      background: #000000;
+    }
+
+    .polymarket-markets {
+      margin: 0 24px 24px;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .polymarket-markets h3 {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 15px;
+      letter-spacing: 0.01em;
+    }
+
+    .polymarket-markets-note {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .polymarket-source-note {
+      margin: 10px 24px 24px;
+      color: var(--accent-strong);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .polymarket-source-note a {
+      color: var(--accent-strong);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(185, 142, 255, 0.45);
+    }
+
+    .polymarket-source-note a:hover {
+      text-decoration: underline;
+      border-bottom-color: rgba(185, 142, 255, 0.85);
+    }
+
+    .macro-assets-section h2 {
+      margin: 0 0 8px;
+      color: var(--accent-strong);
+      font-size: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .macro-assets-note {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .macro-assets-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .macro-asset-card {
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    .macro-asset-name {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .macro-asset-link {
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .macro-asset-link:hover {
+      color: var(--accent);
+      text-decoration: underline;
+      border-bottom-color: rgba(255, 196, 2, 0.45);
+    }
+
+    .macro-asset-price {
+      margin-top: 6px;
+      color: var(--text);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .macro-asset-change {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .macro-asset-change.pos {
+      color: #8af08f;
+    }
+
+    .macro-asset-change.neg {
+      color: #ff8c8c;
+    }
+
+    .macro-source-note {
+      margin-top: 10px;
+      color: var(--accent-strong);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .macro-source-note a {
+      color: var(--accent-strong);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(185, 142, 255, 0.45);
+    }
+
+    .macro-source-note a:hover {
+      text-decoration: underline;
+      border-bottom-color: rgba(185, 142, 255, 0.85);
+    }
+
+    .bca-source-note {
+      margin-top: 10px;
+      color: var(--accent-strong);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .bca-source-note a {
+      color: var(--accent-strong);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(185, 142, 255, 0.45);
+    }
+
+    .bca-source-note a:hover {
+      text-decoration: underline;
+      border-bottom-color: rgba(185, 142, 255, 0.85);
+    }
+
+    .shipping-source-note {
+      margin: 10px 24px 24px;
+      color: var(--accent-strong);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .shipping-source-note a {
+      color: var(--accent-strong);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(185, 142, 255, 0.45);
+    }
+
+    .shipping-source-note a:hover {
+      text-decoration: underline;
+      border-bottom-color: rgba(185, 142, 255, 0.85);
+    }
+
+    .recommend-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .recommend-item {
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    .recommend-item a {
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .recommend-item a:hover {
+      text-decoration: underline;
+    }
+
+    .polymarket-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .polymarket-group {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+    }
+
+    .polymarket-group-title {
+      margin: 0;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: var(--accent);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 196, 2, 0.08);
+    }
+
+    .polymarket-table-wrap {
+      max-height: 320px;
+      overflow: auto;
+    }
+
+    .polymarket-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .polymarket-table th,
+    .polymarket-table td {
+      padding: 8px 10px;
+      font-size: 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      vertical-align: top;
+    }
+
+    .polymarket-table th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      color: var(--muted);
+      background: #111111;
+    }
+
+    .polymarket-table tr:nth-child(even) td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .polymarket-title-cell {
+      color: var(--text);
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .polymarket-slug-link {
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .polymarket-slug-link:hover {
+      text-decoration: underline;
+    }
+
+    .feed-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .feed-item {
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .feed-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 196, 2, 0.36);
+      background: rgba(255, 196, 2, 0.05);
+    }
+
+    .feed-item .index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      margin-right: 10px;
+      border-radius: 50%;
+      background: rgba(185, 142, 255, 0.16);
+      color: var(--accent-strong);
+      font-size: 13px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+
+    .feed-item .text {
+      display: inline-block;
+      color: var(--text);
+      line-height: 1.75;
+      width: calc(100% - 44px);
+      vertical-align: top;
+    }
+
+    .feed-subtitle {
+      margin: 0 0 16px;
+      color: var(--accent-strong);
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+    }
+
+    .feed-updated {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      font-style: italic;
+    }
+
+    .feed-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 16px;
+      color: var(--accent);
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .feed-link:hover {
+      text-decoration: underline;
+    }
+
+    .feed-zh {
+      display: block;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(185, 142, 255, 0.2);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    .feed-en {
+      display: block;
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    .empty {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px dashed rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--accent);
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    @media (max-width: 900px) {
+      .hero-topline {
+        align-items: flex-start;
+      }
+
+      .stat-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .polymarket-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .polymarket-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .macro-assets-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .feed-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-topline">
+        <div class="eyebrow">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="eyebrow-main">冲突监测页面</span>
+        </div>
+        <div class="hero-status-line">冲突持续<span id="hero-day-count" class="eyebrow-day">0</span>天<span class="hero-status-sep">|</span><span id="hero-risk-text">今日是周日，未触发周四周五风险提示。</span></div>
+      </div>
+      <h1>美伊冲突主题跟踪页</h1>
+      <p>
+        聚焦冲突持续时间与最新描述内容。页面会自动计算自 <strong>2026-02-28</strong> 起的天数，并展示最新抓取文本。
+      </p>
+      <div class="hero-bili"><a href="https://space.bilibili.com/229150291" target="_blank" rel="noreferrer"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEoUlEQVR4nO2cS68URRSA6wIiEhbAQkFADSjBEBMXbmShRgIEFcNDYcMCVoCvqD/AlbpgxcYXmkAICSEkmEBQoz9BiMpDJTEmBrjIvVeBi/gC/UiFGmzr9sz0TJ++c6b6fMnsKqdOn2/6MVNdxznDMAzDMAzDMIzEAdYDI8A5YLVTBrAaOBM+K13KAAPAL/zHNWCDUwKwIeTU4KxLHWA4c8BqpDBWhueMSx3gOeC6Jinky/A5rnF1AHi+SQE21jmXnqKhECjIQRW9LAgmQ09hMBl6CoTJ0FMoTIaegmEy9BQOk1EOBAtoMoRAoJAmQxhKFNRkVARdFLa2MoB5wEvAp8B3wBXqxyjwLXAEeAGY0wsRc4APcv61NeAfYA9w93jJWFPTM6FTLgPPVC3jNeDfjlOr99nyYlUy1jaRccxPCjwITHM1A5gGLAZeAb7JqY+/rD8tPek9wG/RRL8Dm/06uehkfQwwAdgC/BnV6hIwS3Ki3TkylohNkBjA4zlS3pMKfl+4FmbZJBI8YYCtUc2uiTx5Aa9Ggb+0y1R7gInA8ah2WyUCfyEetCYw9st8WCLoD1HQ+0WyrQHAQ1HtTkkE9TfwLHeIZFsDgOlR7S5KXAezXBfLtgYAk+Ibe9mAJqQEJkQZJkQZJkQZJkQZJkQZJkQZSQjh5kEsA3YC54GfgXVCG4WGQrydYY5JMlknJiSSMMxYhoX3Nt6KW6WcvhJSQEKWIYH5/M7fVojLUS+kQwkNLgDPCm139rGKICJHtRBgFTBYsCAjwIfAcslLCXAbsAL4qMAZ02Cw2/3qaoWEtebhXkgQknPepSQkxLrcawkl5AylKGR9eOQ8p0FCQTk+17PdtgBRLaSOYEJ0YUKUYUKUYUKUYUKUYUKUYUI6+OfAjQNJCOH/6xZt91UAS/0bgcBJ/9Z5gfHr/Atr4e/40ussdRAylJnP/0q+vcXYKeHXdIOfgMltxnvRDQYrO5CEhIxEc77VYux2xvJmB+NNSIE5380p8sfAE8DM8HkSOJQzLjveb5qZkRl/OGfcjoqPJQkhszpYSCrDr8BdFR9L/wvxAI9E1/p27AX2dzD+qj/jXMUkIyRzpuwC/m5R2IthB/BAWAR7I2dvX8xXwMNuHEhKSAPgztBX953wWpD/vO/7lgBTc8YvAN4OW5RHw/6WH8NZtGq8foMkK6SfMSHKMCHKMCHKMCHKMCGpCwlBbVu0lm3RTRoHPFA6aH0bB5yUCPp5FNRaa3TW8C3LoSr6dRy15jOF778notptkQhs7Zm6ANgW39CB2VU2MHtUJHiCAI9V1sAsTGAt/sq3+JNdewkvBzRrgukbCC/K+/c1dYCpoQHoy8DXTZpgPlXV5K9bm1glbWKjdrHWSLk9l8Tbw7aQYq3G27cal3mi6uJm7xsIfwacDmvVdeMq8D3wSVhOnuv6gQIHNtDD3Ca3ye0vlxomRBnhhYNmjPY4twHgjxb5lWrtoRLgYIsDPqggvyMt8tvnUgNY2KQBjH+DcKGC/BaHR9UY/67xfJci/gkEOBAuX6PhrOm5jAbAvSGnK6HRgc91wa0BhmEYhmEYhmEYLj1uAOqvV5itzklCAAAAAElFTkSuQmCC" alt="bilibili"><span class="hero-bili-text">卷卷姐juan</span></a></div>
+    </section>
+
+    <section class="panel main-section macro-assets-section">
+      <h2>资产价格跟踪</h2>
+      <p class="macro-assets-note" id="macro-assets-note">正在加载资产价格...</p>
+      <div class="macro-assets-grid" id="macro-assets-grid">
+        <div class="empty">暂无数据</div>
+      </div>
+      <div class="macro-source-note">数据来源：<a href="https://stooq.com/" target="_blank" rel="noreferrer">Stooq</a> + <a href="https://fred.stlouisfed.org/" target="_blank" rel="noreferrer">FRED</a></div>
+    </section>
+
+    <section class="panel embed-card main-section">
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "美军在3月31日前进入伊朗？",
+        "description": "预测市场：是 17% · 否 84%（Polymarket）",
+        "url": "https://polymarket.com/event/us-forces-enter-iran-by",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Polymarket",
+          "url": "https://polymarket.com"
+        }
+      }
+      </script>
+      <div class="embed-head">
+        <div>
+          <h2>预测市场跟踪</h2>
+        </div>
+        <a
+          class="embed-link"
+          href="https://polymarket.com/event/us-forces-enter-iran-by#UoXVIwtD"
+          target="_blank"
+          rel="noreferrer"
+        >
+          在新窗口打开
+        </a>
+      </div>
+      <div class="polymarket-wrap">
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "美伊是否会在 4 月 15 日前停火？",
+          "description": "预测市场：是 27% · 否 74%（Polymarket）",
+          "url": "https://polymarket.com/event/us-x-iran-ceasefire-by",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Polymarket",
+            "url": "https://polymarket.com"
+          }
+        }
+        </script>
+        <figure
+          class="polymarket-embed"
+          id="polymarket-us-forces-enter-iran-by-march-31-222-191-243-517-878-439-519"
+          aria-label="Polymarket 预测市场：美军在3月31日前进入伊朗？"
+          itemscope
+          itemtype="https://schema.org/WebPage"
+          style="position:relative;margin:0;width:100%"
+        >
+          <iframe
+            title="美军在3月31日前进入伊朗？ - Polymarket 预测市场"
+            src="https://embed.polymarket.com/market?market=us-forces-enter-iran-by-march-31-222-191-243-517-878-439-519&theme=dark&height=300"
+            width="400"
+            height="300"
+            frameborder="0"
+            allowtransparency="true"
+          >
+          </iframe>
+          <a
+            href="https://polymarket.com/event/us-forces-enter-iran-by"
+            aria-label="在 Polymarket 查看"
+            target="_blank"
+            rel="noopener"
+            style="position:absolute;top:16px;right:20px;width:120px;height:24px;z-index:10"
+          >
+          </a>
+          <figcaption style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">
+            <strong>美军在3月31日前进入伊朗？</strong><br>
+            是 17% · 否 84%<br>
+            <a href="https://polymarket.com/event/us-forces-enter-iran-by">
+              在 Polymarket 查看完整市场并交易
+            </a>
+          </figcaption>
+        </figure>
+        <figure
+          class="polymarket-embed"
+          id="polymarket-us-x-iran-ceasefire-by-april-15-182-528-637"
+          aria-label="Polymarket 预测市场：美伊是否会在 4 月 15 日前停火？"
+          itemscope
+          itemtype="https://schema.org/WebPage"
+          style="position:relative;margin:0;width:100%"
+        >
+          <iframe
+            title="美伊是否会在 4 月 15 日前停火？ - Polymarket 预测市场"
+            src="https://embed.polymarket.com/market?market=us-x-iran-ceasefire-by-april-15-182-528-637&theme=dark&height=300"
+            width="400"
+            height="300"
+            frameborder="0"
+            allowtransparency="true"
+          >
+          </iframe>
+          <a
+            href="https://polymarket.com/event/us-x-iran-ceasefire-by"
+            aria-label="在 Polymarket 查看"
+            target="_blank"
+            rel="noopener"
+            style="position:absolute;top:16px;right:20px;width:120px;height:24px;z-index:10"
+          >
+          </a>
+          <figcaption style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">
+            <strong>美伊是否会在 4 月 15 日前停火？</strong><br>
+            是 27% · 否 74%<br>
+            <a href="https://polymarket.com/event/us-x-iran-ceasefire-by">
+              在 Polymarket 查看完整市场并交易
+            </a>
+          </figcaption>
+        </figure>
+      </div>
+      <div class="polymarket-markets">
+        <h3>polymarket-iran相关</h3>
+        <p class="polymarket-markets-note" id="polymarket-footer-note">正在加载 Polymarket footerData...</p>
+        <div class="polymarket-grid" id="polymarket-markdown-table">
+          <div class="empty">暂无数据</div>
+        </div>
+      </div>
+      <div class="polymarket-source-note">数据来源：<a href="https://polymarket.com/zh" target="_blank" rel="noreferrer">Polymarket</a></div>
+    </section>
+
+    <section class="panel main-section">
+      <div class="feed-head">
+        <div>
+          <h2>BCA_daily_monitor</h2>
+          <p>展示最新抓取到的英文原文及中文翻译。</p>
+        </div>
+        <div id="status-badge" class="badge warn">等待本地抓取结果</div>
+      </div>
+
+      <div id="feed-list" class="feed-list">
+        <div class="empty">正在尝试读取本地抓取结果。</div>
+      </div>
+
+      <div class="footer-note" id="footer-note">
+        说明：页面只负责展示本地结果，不直接跨域抓取远程站点。
+      </div>
+      <div class="bca-source-note">数据来源：<a href="https://www.bcaresearch.com/collection/bcas-iran-conflict-daily-dashboard" target="_blank" rel="noreferrer">BCA</a></div>
+    </section>
+
+    <section class="panel embed-card main-section">
+      <div class="embed-head">
+        <div>
+          <h2>航运观察</h2>
+        </div>
+        <a
+          class="embed-link"
+          href="http://47.100.241.247:8501/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          在新窗口打开
+        </a>
+      </div>
+      <div class="sheet-wrap">
+        <iframe
+          class="sheet-frame shipping-frame"
+          src="http://47.100.241.247:8501/"
+          title="航运观察"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+      <div class="shipping-source-note">数据来源：<a href="http://47.100.241.247:8501/" target="_blank" rel="noreferrer">国金数字未来实验室｜霍尔木兹海峡油轮过境监测</a></div>
+    </section>
+
+    <section class="panel main-section">
+      <h2>五角大楼周边披萨店</h2>
+      <div class="pizzint-card">
+        <div class="pizzint-content">
+          <h3 class="pizzint-title">五角大楼周边披萨店</h3>
+          <p class="pizzint-description">实时监测五角大楼周边披萨店的动态与信息</p>
+          <a href="https://pizzint.watch/" target="_blank" rel="noreferrer" class="pizzint-link">访问 pizzint.watch →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel main-section">
+      <h2>好的跟踪页面推荐</h2>
+      <ul class="recommend-list">
+        <li class="recommend-item">
+          国金数字未来实验室｜霍尔木兹海峡油轮过境监测：
+          <a href="http://47.100.241.247:8501/" target="_blank" rel="noreferrer">http://47.100.241.247:8501/</a>
+        </li>
+        <li class="recommend-item">
+          沉浸式翻译美伊冲突实时追踪跟踪：
+          <a href="https://iran.immersivetranslate.com/zh-CN/" target="_blank" rel="noreferrer">https://iran.immersivetranslate.com/zh-CN/</a>
+        </li>
+        <li class="recommend-item">
+          美以伊战争时间线：
+          <a href="https://us-israel-iran-timeline.vercel.app/" target="_blank" rel="noreferrer">https://us-israel-iran-timeline.vercel.app/</a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    const startDate = new Date("2026-02-28T00:00:00+08:00");
+
+    function getDayDiff() {
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+      const msPerDay = 24 * 60 * 60 * 1000;
+      return Math.max(0, Math.floor((today - start) / msPerDay));
+    }
+
+    function formatToday() {
+      const now = new Date();
+      return now.toLocaleDateString("zh-CN", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      });
+    }
+
+    function getWeekdayName(day) {
+      const names = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+      return names[day] || "--";
+    }
+
+    function updateDuration() {
+      const days = getDayDiff();
+      const now = new Date();
+      const weekday = now.getDay();
+      const weekdayName = getWeekdayName(weekday);
+      const heroDayCount = document.getElementById("hero-day-count");
+      const heroRiskText = document.getElementById("hero-risk-text");
+      const isRiskDay = weekday === 4 || weekday === 5;
+
+      if (heroDayCount) {
+        heroDayCount.textContent = String(days);
+      }
+
+      if (heroRiskText) {
+        heroRiskText.textContent = "今日是" + weekdayName + "，"
+          + (isRiskDay ? "已触发周四周五风险提示。" : "未触发周四周五风险提示。");
+      }
+    }
+
+    function syncHeroOffset() {
+      const hero = document.querySelector(".hero");
+      if (!hero) {
+        return;
+      }
+      const topOffset = 16;
+      document.documentElement.style.setProperty("--hero-offset", (hero.offsetHeight + topOffset) + "px");
+    }
+
+    function renderItems(data) {
+      const badge = document.getElementById("status-badge");
+      const feed = document.getElementById("feed-list");
+      const note = document.getElementById("footer-note");
+      const items = Array.isArray(data.items) ? data.items : [];
+      const title = typeof data.title === "string" ? data.title.trim() : "";
+      const titleZh = typeof data.title_zh === "string" ? data.title_zh.trim() : "";
+      const updated = typeof data.updated === "string" ? data.updated.trim() : "";
+      const updatedZh = typeof data.updated_zh === "string" ? data.updated_zh.trim() : "";
+
+      if (!items.length) {
+        badge.textContent = "已读取，但没有匹配项";
+        badge.className = "badge warn";
+        feed.innerHTML = '<div class="empty">抓取脚本已运行，但没有抓到 <code>div.dc-description</code> 内容。请检查站点是否改版、是否需要登录，或是否命中了回退模式。</div>';
+      } else {
+        badge.textContent = "本地抓取结果已加载";
+        badge.className = "badge";
+        const titleHtml = title
+          ? '<h3 class="feed-subtitle">' + title.replace(/</g, "&lt;").replace(/>/g, "&gt;")
+            + (titleZh ? '<span class="feed-zh">' + titleZh.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</span>" : "")
+            + '</h3>'
+          : "";
+        const itemsHtml = items.map((item, idx) => {
+          const text = String(item.text || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          const textZh = String(item.text_zh || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          return '<article class="feed-item"><span class="index">' + (idx + 1) + '</span><span class="text"><span class="feed-en">' + text + "</span>" + (textZh ? '<span class="feed-zh">' + textZh + "</span>" : "") + "</span></article>";
+        }).join("");
+        const updatedHtml = updated
+          ? '<p class="feed-updated">' + updated.replace(/</g, "&lt;").replace(/>/g, "&gt;")
+            + (updatedZh ? '<span class="feed-zh">' + updatedZh.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</span>" : "")
+            + "</p>"
+          : "";
+        feed.innerHTML = titleHtml + itemsHtml + updatedHtml;
+      }
+
+      const fetchedAt = data.fetched_at || "未知";
+      const mode = data.source_mode || "未知";
+      const count = typeof data.item_count === "number" ? data.item_count : items.length;
+      note.textContent = "最近抓取时间：" + fetchedAt + " | 抓取模式：" + mode + " | 项目数：" + count;
+    }
+
+    function renderPolymarketFooter(data) {
+      const note = document.getElementById("polymarket-footer-note");
+      const table = document.getElementById("polymarket-markdown-table");
+      if (!note || !table) {
+        return;
+      }
+
+      const formatBeijingTime = (isoText) => {
+        if (!isoText) {
+          return "未知";
+        }
+        const dt = new Date(isoText);
+        if (Number.isNaN(dt.getTime())) {
+          return String(isoText);
+        }
+        const parts = new Intl.DateTimeFormat("zh-CN", {
+          timeZone: "Asia/Shanghai",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false
+        }).formatToParts(dt).reduce((acc, part) => {
+          acc[part.type] = part.value;
+          return acc;
+        }, {});
+        return parts.year + "-" + parts.month + "-" + parts.day + " "
+          + parts.hour + ":" + parts.minute + ":" + parts.second + "（北京时间）";
+      };
+
+      const escapeHtml = (text) => String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+      const renderGroup = (groupName, items) => {
+        const rows = Array.isArray(items) ? items : [];
+        const bodyHtml = rows.map((item, idx) => {
+          const title = escapeHtml(item.title || "");
+          const slug = escapeHtml(item.slug || "");
+          const url = slug ? "https://polymarket.com/event/" + slug : "";
+          const slugHtml = url
+            ? '<a class="polymarket-slug-link" href="' + url + '" target="_blank" rel="noreferrer">' + slug + "</a>"
+            : "-";
+          return '<tr><td style="width:56px;">' + (idx + 1) + "</td><td class=\"polymarket-title-cell\">" + title + "</td><td>" + slugHtml + "</td></tr>";
+        }).join("");
+
+        return '<section class="polymarket-group"><h4 class="polymarket-group-title">' + groupName + "（" + rows.length
+          + '）</h4><div class="polymarket-table-wrap"><table class="polymarket-table"><thead><tr><th style="width:56px;">#</th><th>标题</th><th>slug</th></tr></thead><tbody>'
+          + (bodyHtml || '<tr><td colspan="3">暂无数据</td></tr>')
+          + "</tbody></table></div></section>";
+      };
+
+      const newestCount = typeof data.newest_count === "number" ? data.newest_count : 0;
+      const popularCount = typeof data.popular_count === "number" ? data.popular_count : 0;
+      const fetchedAt = formatBeijingTime(data.fetched_at);
+      const mode = data.source_mode || "未知";
+      note.textContent = "最近抓取时间：" + fetchedAt + " | newestMarkets：" + newestCount + " | popularMarkets：" + popularCount + " | 模式：" + mode;
+      table.innerHTML = renderGroup("newestMarkets", data.newest_markets) + renderGroup("popularMarkets", data.popular_markets);
+    }
+
+    function renderMacroAssets(data) {
+      const note = document.getElementById("macro-assets-note");
+      const grid = document.getElementById("macro-assets-grid");
+      if (!note || !grid) {
+        return;
+      }
+
+      const assetUrlMap = {
+        "cl.f": "https://stooq.com/q/?s=cl.f",
+        "gc.f": "https://stooq.com/q/?s=gc.f",
+        "^spx": "https://stooq.com/q/?s=%5Espx",
+        "^TNX": "https://fred.stlouisfed.org/series/DGS10",
+        "DGS10": "https://fred.stlouisfed.org/series/DGS10"
+      };
+
+      const escapeHtml = (text) => String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+      const formatBeijingTime = (isoText) => {
+        if (!isoText) {
+          return "未知";
+        }
+        const dt = new Date(isoText);
+        if (Number.isNaN(dt.getTime())) {
+          return String(isoText);
+        }
+        const parts = new Intl.DateTimeFormat("zh-CN", {
+          timeZone: "Asia/Shanghai",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false
+        }).formatToParts(dt).reduce((acc, part) => {
+          acc[part.type] = part.value;
+          return acc;
+        }, {});
+        return parts.year + "-" + parts.month + "-" + parts.day + " "
+          + parts.hour + ":" + parts.minute + ":" + parts.second + "（北京时间）";
+      };
+
+      const toNum = (value) => {
+        const num = Number(value);
+        return Number.isFinite(num) ? num : NaN;
+      };
+
+      const formatPrice = (asset) => {
+        const price = toNum(asset.price);
+        if (!Number.isFinite(price)) {
+          return "--";
+        }
+        if (asset.symbol === "^TNX") {
+          return price.toFixed(3) + "%";
+        }
+        if (asset.currency === "USD") {
+          return "$" + price.toFixed(2);
+        }
+        return price.toFixed(2);
+      };
+
+      const formatChange = (asset) => {
+        const change = toNum(asset.change);
+        const changePct = toNum(asset.change_percent);
+        if (!Number.isFinite(change) || !Number.isFinite(changePct)) {
+          return { text: "变动：--", cls: "" };
+        }
+        const sign = change > 0 ? "+" : "";
+        const text = "变动：" + sign + change.toFixed(asset.symbol === "^TNX" ? 3 : 2)
+          + " (" + sign + changePct.toFixed(2) + "%)";
+        return { text, cls: change > 0 ? "pos" : (change < 0 ? "neg" : "") };
+      };
+
+      const assets = Array.isArray(data.assets) ? data.assets : [];
+      note.textContent = "最近抓取时间：" + formatBeijingTime(data.fetched_at) + " | 数据源：" + (data.source_mode || "未知");
+
+      if (!assets.length) {
+        grid.innerHTML = '<div class="empty">暂无数据</div>';
+        return;
+      }
+
+      grid.innerHTML = assets.map((asset) => {
+        const change = formatChange(asset);
+        const name = asset.name || asset.symbol || "未命名资产";
+        const assetUrl = asset.url || assetUrlMap[asset.symbol] || "";
+        const nameHtml = assetUrl
+          ? '<a class="macro-asset-link" href="' + escapeHtml(assetUrl) + '" target="_blank" rel="noreferrer">' + escapeHtml(name) + "</a>"
+          : escapeHtml(name);
+        return '<article class="macro-asset-card">'
+          + '<div class="macro-asset-name">' + nameHtml + "</div>"
+          + '<div class="macro-asset-price">' + formatPrice(asset) + "</div>"
+          + '<div class="macro-asset-change ' + change.cls + '">' + change.text + "</div>"
+          + "</article>";
+      }).join("");
+    }
+
+    /* EMBEDDED_SNAPSHOT_START */
+const embeddedSnapshot = {
+  "target_url": "https://www.bcaresearch.com/collection/bcas-iran-conflict-daily-dashboard",
+  "selector": "div.dc-description",
+  "source_mode": "div.dc-description-structured",
+  "fetched_at": "2026-03-27T16:10:30+08:00",
+  "title": "Crisis At Inflection Point?",
+  "title_zh": "危机拐点？",
+  "updated": "Updated: March 25, 2026.",
+  "updated_zh": "更新日期：2026 年 3 月 25 日。",
+  "item_count": 5,
+  "items": [
+    {
+      "index": 1,
+      "text": "The US and Iran are sending mixed signals to the market. While the US claimed that negotiations had begun, Iran dismissed the rumour, and both sides continued their attacks.",
+      "text_zh": "美国和伊朗向市场发出了混合信号。美国声称谈判已经开始，但伊朗否认谣言，双方继续攻击。"
+    },
+    {
+      "index": 2,
+      "text": "There had been some traffic through the Strait for countries that agreed to pay a fee to the Iranian authorities. However, this has a marginal impact on global energy supply, as some Asian countries have begun implementing measures to curb energy consumption, such as reducing the workweek, declaring public holidays, and rationing fuel.",
+      "text_zh": "同意向伊朗当局支付费用的国家有一些通过海峡的交通。然而，这对全球能源供应影响有限，因为一些亚洲国家已经开始实施遏制能源消耗的措施，例如减少每周工作时间、宣布公共假期和实行燃料配给等。"
+    },
+    {
+      "index": 3,
+      "text": "Protests continue in Iran despite the regime’s attempts to suppress them. Security personnel manning checkpoints meant to prevent protests have been targeted by drone attacks, as the joint forces try to weaken internal security to provoke regime change or at least loosen their control over the population.",
+      "text_zh": "尽管伊朗政权试图镇压，抗议活动仍在继续。旨在阻止抗议活动的检查站的安全人员成为无人机袭击的目标，因为联合部队试图削弱内部安全，引发政权更迭或至少放松对民众的控制。"
+    },
+    {
+      "index": 4,
+      "text": "The report of negotiations between the US and Iran caused the Brent and WTI futures curves to decline. Prices of aluminum, copper, and natural gas have also recently fallen from their peaks.",
+      "text_zh": "美国和伊朗之间的谈判报告导致布伦特和WTI期货曲线下跌。铝、铜和天然气的价格最近也从峰值回落。"
+    },
+    {
+      "index": 5,
+      "text": "Watch out for different types of attacks in the next few days. If Iran continues to target shipping and energy infrastructure, then it is still not ready to negotiate. However, if it restricts its attacks to military targets or non-economic or symbolic targets, then we have likely entered the de-escalation phase of the conflict. That would mean oil and the VIX have peaked.",
+      "text_zh": "留意未来几天不同类型的攻击。如果伊朗继续瞄准航运和能源基础设施，那么它仍然没有准备好进行谈判。然而，如果它将攻击限制在军事目标或非经济或象征性目标上，那么我们很可能已经进入冲突的降级阶段。这意味着石油和波动率指数已经见顶。"
+    }
+  ]
+};
+    /* EMBEDDED_SNAPSHOT_END */
+
+    /* POLYMARKET_FOOTER_SNAPSHOT_START */
+const embeddedPolymarketFooter = {
+  "target_url": "https://polymarket.com/_next/data/build-TfctsWXpff2fKS/zh/iran.json?category=iran",
+  "source_mode": "pageProps.footerData",
+  "fetched_at": "2026-03-29T14:08:06+08:00",
+  "newest_count": 20,
+  "popular_count": 20,
+  "newest_markets": [
+    {
+      "title": "Will USD hit ___ Iranian rials by April 30?",
+      "slug": "will-usd-hit-iranian-rials-by-april-30"
+    },
+    {
+      "title": "标准普尔500指数本周打破连跌纪录？",
+      "slug": "sp-500-breaks-its-losing-streak-this-week"
+    },
+    {
+      "title": "How many different countries will Israel strike in April?",
+      "slug": "how-many-different-countries-will-israel-strike-in-april"
+    },
+    {
+      "title": "Military action against Iran ends on...?",
+      "slug": "military-action-against-iran-ends-on-127"
+    },
+    {
+      "title": "Military action against Iran ends by...?",
+      "slug": "military-action-against-iran-ends-by-522"
+    },
+    {
+      "title": "Mohammed bin Salman out as leader of Saudi Arabia by...?",
+      "slug": "mohammed-bin-salman-out-as-leader-of-saudi-arabia-by"
+    },
+    {
+      "title": "Which countries will send warships through the Strait of Hormuz by April 30?",
+      "slug": "which-countries-will-send-warships-through-the-strait-of-hormuz-by-april-30"
+    },
+    {
+      "title": "Abbas Araghchi out as Minister of Foreign Affairs of Iran by...?",
+      "slug": "abbas-araghchi-out-as-minister-of-foreign-affairs-of-iran-by"
+    },
+    {
+      "title": "Gulf State military action against Iran by...?",
+      "slug": "gulf-state-military-action-against-iran-by"
+    },
+    {
+      "title": "Israel military action against Iranian Power Plant by April 30?",
+      "slug": "israel-military-action-against-iranian-power-plant-by-april-30"
+    },
+    {
+      "title": "How many ships transit the Strait of Hormuz this week? (Mar 23-29)",
+      "slug": "how-many-ships-transit-the-strait-of-hormuz-this-week-mar-23-29"
+    },
+    {
+      "title": "Iran agrees to surrender enriched uranium stockpile by...?",
+      "slug": "iran-agrees-to-surrender-enriched-uranium-stockpile-by"
+    },
+    {
+      "title": "在石油价格触及120 $之前，美国x伊朗停火？",
+      "slug": "us-x-iran-ceasefire-before-oil-hits-120"
+    },
+    {
+      "title": "下一次美伊外交会晤将在哪里举行？",
+      "slug": "where-will-the-next-us-iran-diplomatic-meeting-happen-811"
+    },
+    {
+      "title": "Will JD Vance talk to Iranian negotiators by...?",
+      "slug": "will-jd-vance-talk-to-iranian-negotiators-by"
+    },
+    {
+      "title": "JD Vance与伊朗的外交会晤在... ？",
+      "slug": "jd-vance-diplomatic-meeting-with-iran-by"
+    },
+    {
+      "title": "万斯是否会在...之前访问中东？",
+      "slug": "will-vance-visit-the-middle-east-by"
+    },
+    {
+      "title": "Pete Hegseth out as Secretary of Defense by June 30?",
+      "slug": "pete-hegseth-out-as-secretary-of-defense-by-june-30"
+    },
+    {
+      "title": "U.S. forces seize another oil tanker by April 15?",
+      "slug": "us-forces-seize-another-oil-tanker-by-april-15"
+    },
+    {
+      "title": "Israel military action against Fordow nuclear facility by...?",
+      "slug": "israel-military-action-against-fordow-nuclear-facility-by"
+    }
+  ],
+  "popular_markets": [
+    {
+      "title": "天然气是否会在3月底前到达__ ？",
+      "slug": "will-gas-hit-by-end-of-march"
+    },
+    {
+      "title": "3月底通过霍尔木兹海峡的平均船舶数量？",
+      "slug": "avg-of-ships-transiting-strait-of-hormuz-end-of-march"
+    },
+    {
+      "title": "伊朗领导层的变化是…… ？",
+      "slug": "iran-leadership-change-by"
+    },
+    {
+      "title": "另一个国家会在……之前袭击伊朗吗？",
+      "slug": "will-another-country-strike-iran-by-march-31"
+    },
+    {
+      "title": "伊朗在3月31日前对___采取军事行动？",
+      "slug": "which-countries-will-iran-strike-in-march"
+    },
+    {
+      "title": "美国/以色列通过……袭击也门？",
+      "slug": "usisrael-strike-yemen-by"
+    },
+    {
+      "title": "霍尔木兹海峡的交通在4月底恢复正常？",
+      "slug": "strait-of-hormuz-traffic-returns-to-normal-by-april-30"
+    },
+    {
+      "title": "是否有任何国家会在3月31日之前驱逐美国大使？",
+      "slug": "will-any-country-expel-a-us-ambassador-by-march-31"
+    },
+    {
+      "title": "Which countries will send warships through the Strait of Hormuz by April 30?",
+      "slug": "which-countries-will-send-warships-through-the-strait-of-hormuz-by-april-30"
+    },
+    {
+      "title": "3月31日前达成美伊核协议？",
+      "slug": "us-iran-nuclear-deal-by-march-31"
+    },
+    {
+      "title": "伊朗政权会在2027年之前倒台吗？",
+      "slug": "will-the-iranian-regime-fall-by-the-end-of-2026"
+    },
+    {
+      "title": "美国护送商船通过霍尔木兹…… ？",
+      "slug": "us-escorts-commercial-ship-through-hormuz-by-march-31"
+    },
+    {
+      "title": "下一次美伊外交会晤将在哪里举行？",
+      "slug": "where-will-the-next-us-iran-diplomatic-meeting-happen-811"
+    },
+    {
+      "title": "Bab el-Mandeb海峡实际上是由……关闭的？",
+      "slug": "bab-el-mandeb-strait-effectively-closed-by"
+    },
+    {
+      "title": "JD Vance与伊朗的外交会晤在... ？",
+      "slug": "jd-vance-diplomatic-meeting-with-iran-by"
+    },
+    {
+      "title": "Iran military action against ___ by April 30?",
+      "slug": "iran-military-action-against-by-april-30"
+    },
+    {
+      "title": "美国与伊朗的外交会议在... ？",
+      "slug": "us-x-iran-diplomatic-meeting-by-833"
+    },
+    {
+      "title": "国会在3月31日前通过伊朗战争权力决议？",
+      "slug": "congress-passes-iran-war-powers-resolution-by-march-31"
+    },
+    {
+      "title": "3月份以色列将罢工多少个不同的国家？",
+      "slug": "how-many-different-countries-will-israel-strike-in-march"
+    },
+    {
+      "title": "Which countries will conduct military action against Iran by April 30?",
+      "slug": "which-countries-will-conduct-military-action-against-iran-by-april-30"
+    }
+  ],
+  "markdown_table": "| 分类 | 标题 | slug |\n|---|---|---|\n| newestMarkets | Will USD hit ___ Iranian rials by April 30? | will-usd-hit-iranian-rials-by-april-30 |\n| newestMarkets | 标准普尔500指数本周打破连跌纪录？ | sp-500-breaks-its-losing-streak-this-week |\n| newestMarkets | How many different countries will Israel strike in April? | how-many-different-countries-will-israel-strike-in-april |\n| newestMarkets | Military action against Iran ends on...? | military-action-against-iran-ends-on-127 |\n| newestMarkets | Military action against Iran ends by...? | military-action-against-iran-ends-by-522 |\n| newestMarkets | Mohammed bin Salman out as leader of Saudi Arabia by...? | mohammed-bin-salman-out-as-leader-of-saudi-arabia-by |\n| newestMarkets | Which countries will send warships through the Strait of Hormuz by April 30? | which-countries-will-send-warships-through-the-strait-of-hormuz-by-april-30 |\n| newestMarkets | Abbas Araghchi out as Minister of Foreign Affairs of Iran by...? | abbas-araghchi-out-as-minister-of-foreign-affairs-of-iran-by |\n| newestMarkets | Gulf State military action against Iran by...? | gulf-state-military-action-against-iran-by |\n| newestMarkets | Israel military action against Iranian Power Plant by April 30? | israel-military-action-against-iranian-power-plant-by-april-30 |\n| newestMarkets | How many ships transit the Strait of Hormuz this week? (Mar 23-29) | how-many-ships-transit-the-strait-of-hormuz-this-week-mar-23-29 |\n| newestMarkets | Iran agrees to surrender enriched uranium stockpile by...? | iran-agrees-to-surrender-enriched-uranium-stockpile-by |\n| newestMarkets | 在石油价格触及120 $之前，美国x伊朗停火？ | us-x-iran-ceasefire-before-oil-hits-120 |\n| newestMarkets | 下一次美伊外交会晤将在哪里举行？ | where-will-the-next-us-iran-diplomatic-meeting-happen-811 |\n| newestMarkets | Will JD Vance talk to Iranian negotiators by...? | will-jd-vance-talk-to-iranian-negotiators-by |\n| newestMarkets | JD Vance与伊朗的外交会晤在... ？ | jd-vance-diplomatic-meeting-with-iran-by |\n| newestMarkets | 万斯是否会在...之前访问中东？ | will-vance-visit-the-middle-east-by |\n| newestMarkets | Pete Hegseth out as Secretary of Defense by June 30? | pete-hegseth-out-as-secretary-of-defense-by-june-30 |\n| newestMarkets | U.S. forces seize another oil tanker by April 15? | us-forces-seize-another-oil-tanker-by-april-15 |\n| newestMarkets | Israel military action against Fordow nuclear facility by...? | israel-military-action-against-fordow-nuclear-facility-by |\n| popularMarkets | 天然气是否会在3月底前到达__ ？ | will-gas-hit-by-end-of-march |\n| popularMarkets | 3月底通过霍尔木兹海峡的平均船舶数量？ | avg-of-ships-transiting-strait-of-hormuz-end-of-march |\n| popularMarkets | 伊朗领导层的变化是…… ？ | iran-leadership-change-by |\n| popularMarkets | 另一个国家会在……之前袭击伊朗吗？ | will-another-country-strike-iran-by-march-31 |\n| popularMarkets | 伊朗在3月31日前对___采取军事行动？ | which-countries-will-iran-strike-in-march |\n| popularMarkets | 美国/以色列通过……袭击也门？ | usisrael-strike-yemen-by |\n| popularMarkets | 霍尔木兹海峡的交通在4月底恢复正常？ | strait-of-hormuz-traffic-returns-to-normal-by-april-30 |\n| popularMarkets | 是否有任何国家会在3月31日之前驱逐美国大使？ | will-any-country-expel-a-us-ambassador-by-march-31 |\n| popularMarkets | Which countries will send warships through the Strait of Hormuz by April 30? | which-countries-will-send-warships-through-the-strait-of-hormuz-by-april-30 |\n| popularMarkets | 3月31日前达成美伊核协议？ | us-iran-nuclear-deal-by-march-31 |\n| popularMarkets | 伊朗政权会在2027年之前倒台吗？ | will-the-iranian-regime-fall-by-the-end-of-2026 |\n| popularMarkets | 美国护送商船通过霍尔木兹…… ？ | us-escorts-commercial-ship-through-hormuz-by-march-31 |\n| popularMarkets | 下一次美伊外交会晤将在哪里举行？ | where-will-the-next-us-iran-diplomatic-meeting-happen-811 |\n| popularMarkets | Bab el-Mandeb海峡实际上是由……关闭的？ | bab-el-mandeb-strait-effectively-closed-by |\n| popularMarkets | JD Vance与伊朗的外交会晤在... ？ | jd-vance-diplomatic-meeting-with-iran-by |\n| popularMarkets | Iran military action against ___ by April 30? | iran-military-action-against-by-april-30 |\n| popularMarkets | 美国与伊朗的外交会议在... ？ | us-x-iran-diplomatic-meeting-by-833 |\n| popularMarkets | 国会在3月31日前通过伊朗战争权力决议？ | congress-passes-iran-war-powers-resolution-by-march-31 |\n| popularMarkets | 3月份以色列将罢工多少个不同的国家？ | how-many-different-countries-will-israel-strike-in-march |\n| popularMarkets | Which countries will conduct military action against Iran by April 30? | which-countries-will-conduct-military-action-against-iran-by-april-30 |\n"
+};
+    /* POLYMARKET_FOOTER_SNAPSHOT_END */
+
+    /* MACRO_ASSETS_SNAPSHOT_START */
+const embeddedMacroAssets = {
+  "target_url": "https://stooq.com/q/l/ + https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10",
+  "source_mode": "stooq.quote + fred.csv",
+  "fetched_at": "2026-03-29T15:12:48+08:00",
+  "assets": [
+    {
+      "name": "原油（WTI期货）",
+      "symbol": "cl.f",
+      "price": 99.64,
+      "change": 6.329999999999998,
+      "change_percent": 6.783838816847067,
+      "currency": "USD",
+      "market_time": "2026-03-27T23:00:00+00:00"
+    },
+    {
+      "name": "黄金（COMEX期货）",
+      "symbol": "gc.f",
+      "price": 4524.3,
+      "change": 101.75,
+      "change_percent": 2.300708867056336,
+      "currency": "USD",
+      "market_time": "2026-03-27T22:40:01+00:00"
+    },
+    {
+      "name": "标普500指数",
+      "symbol": "^spx",
+      "price": 6368.85,
+      "change": -85.03999999999996,
+      "change_percent": -1.3176549336911532,
+      "currency": "USD",
+      "market_time": "2026-03-27T23:00:00+00:00"
+    },
+    {
+      "name": "美国10年期国债收益率",
+      "symbol": "^TNX",
+      "price": 4.42,
+      "change": 0.08999999999999986,
+      "change_percent": 2.0785219399538075,
+      "currency": "PERCENT",
+      "market_time": "2026-03-26T00:00:00+00:00"
+    }
+  ]
+};
+    /* MACRO_ASSETS_SNAPSHOT_END */
+
+    async function loadFeed() {
+      renderItems(embeddedSnapshot);
+      renderPolymarketFooter(embeddedPolymarketFooter);
+      renderMacroAssets(embeddedMacroAssets);
+      document.getElementById("status-badge").textContent = "已加载页面内置数据";
+      document.getElementById("status-badge").className = "badge";
+      document.getElementById("footer-note").textContent =
+        "当前页面直接展示内嵌快照。运行 python scripts/scrape_bca_dashboard.py、python scripts/scrape_polymarket_markets.py 或 python scripts/scrape_macro_assets.py 后，脚本会自动把最新结果同步写入本页。";
+    }
+
+    updateDuration();
+    loadFeed();
+    syncHeroOffset();
+    window.addEventListener("resize", syncHeroOffset);
+    window.setInterval(() => {
+      window.location.reload();
+    }, 60 * 60 * 1000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{
+  "target_url": "https://www.bcaresearch.com/collection/bcas-iran-conflict-daily-dashboard",
+  "selector": "div.dc-description",
+  "source_mode": "div.dc-description-structured",
+  "fetched_at": "2026-03-27T16:10:30+08:00",
+  "title": "Crisis At Inflection Point?",
+  "title_zh": "危机拐点？",
+  "updated": "Updated: March 25, 2026.",
+  "updated_zh": "更新日期：2026 年 3 月 25 日。",
+  "item_count": 5,
+  "items": [
+    {
+      "index": 1,
+      "text": "The US and Iran are sending mixed signals to the market. While the US claimed that negotiations had begun, Iran dismissed the rumour, and both sides continued their attacks.",
+      "text_zh": "美国和伊朗向市场发出了混合信号。美国声称谈判已经开始，但伊朗否认谣言，双方继续攻击。"
+    },
+    {
+      "index": 2,
+      "text": "There had been some traffic through the Strait for countries that agreed to pay a fee to the Iranian authorities. However, this has a marginal impact on global energy supply, as some Asian countries have begun implementing measures to curb energy consumption, such as reducing the workweek, declaring public holidays, and rationing fuel.",
+      "text_zh": "同意向伊朗当局支付费用的国家有一些通过海峡的交通。然而，这对全球能源供应影响有限，因为一些亚洲国家已经开始实施遏制能源消耗的措施，例如减少每周工作时间、宣布公共假期和实行燃料配给等。"
+    },
+    {
+      "index": 3,
+      "text": "Protests continue in Iran despite the regime’s attempts to suppress them. Security personnel manning checkpoints meant to prevent protests have been targeted by drone attacks, as the joint forces try to weaken internal security to provoke regime change or at least loosen their control over the population.",
+      "text_zh": "尽管伊朗政权试图镇压，抗议活动仍在继续。旨在阻止抗议活动的检查站的安全人员成为无人机袭击的目标，因为联合部队试图削弱内部安全，引发政权更迭或至少放松对民众的控制。"
+    },
+    {
+      "index": 4,
+      "text": "The report of negotiations between the US and Iran caused the Brent and WTI futures curves to decline. Prices of aluminum, copper, and natural gas have also recently fallen from their peaks.",
+      "text_zh": "美国和伊朗之间的谈判报告导致布伦特和WTI期货曲线下跌。铝、铜和天然气的价格最近也从峰值回落。"
+    },
+    {
+      "index": 5,
+      "text": "Watch out for different types of attacks in the next few days. If Iran continues to target shipping and energy infrastructure, then it is still not ready to negotiate. However, if it restricts its attacks to military targets or non-economic or symbolic targets, then we have likely entered the de-escalation phase of the conflict. That would mean oil and the VIX have peaked.",
+      "text_zh": "留意未来几天不同类型的攻击。如果伊朗继续瞄准航运和能源基础设施，那么它仍然没有准备好进行谈判。然而，如果它将攻击限制在军事目标或非经济或象征性目标上，那么我们很可能已经进入冲突的降级阶段。这意味着石油和波动率指数已经见顶。"
+    }
+  ]
+}
