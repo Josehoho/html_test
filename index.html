@@ -735,11 +735,34 @@
       border: 1px solid rgba(255, 196, 2, 0.2);
       background: linear-gradient(160deg, rgba(255, 196, 2, 0.08), rgba(16, 16, 16, 0.92));
       transition: all 180ms ease;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
     }
 
     .flight-content:hover {
       border-color: rgba(255, 196, 2, 0.45);
       background: linear-gradient(160deg, rgba(255, 196, 2, 0.12), rgba(16, 16, 16, 0.96));
+    }
+
+    .flight-preview {
+      flex: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 196, 2, 0.1);
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .flight-preview iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      display: block;
+    }
+
+    .flight-info {
+      flex: 1;
+      min-width: 250px;
     }
 
     .flight-title {
@@ -801,6 +824,15 @@
       .feed-head {
         flex-direction: column;
         align-items: flex-start;
+      }
+
+      .flight-content {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .flight-preview iframe {
+        height: 200px;
       }
     }
   </style>
@@ -1011,9 +1043,14 @@
       <h2>全球航班动态</h2>
       <div class="flight-card">
         <div class="flight-content">
-          <h3 class="flight-title">全球航班动态</h3>
-          <p class="flight-description">实时监测全球航班动态与航空信息</p>
-          <a href="https://flight-viz.com/" target="_blank" rel="noreferrer" class="flight-link">访问 flight-viz.com →</a>
+          <div class="flight-preview">
+            <iframe src="https://flight-viz.com/" width="100%" height="300" frameborder="0" scrolling="no" loading="lazy" title="Flight Visualization Preview"></iframe>
+          </div>
+          <div class="flight-info">
+            <h3 class="flight-title">全球航班动态</h3>
+            <p class="flight-description">实时监测全球航班动态与航空信息</p>
+            <a href="https://flight-viz.com/" target="_blank" rel="noreferrer" class="flight-link">访问 flight-viz.com →</a>
+          </div>
         </div>
       </div>
     </section>
