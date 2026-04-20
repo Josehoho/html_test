@@ -724,6 +724,59 @@
       font-family: Consolas, Monaco, monospace;
     }
 
+    .flight-card {
+      display: block;
+      margin-top: 16px;
+    }
+
+    .flight-content {
+      padding: 24px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 196, 2, 0.2);
+      background: linear-gradient(160deg, rgba(255, 196, 2, 0.08), rgba(16, 16, 16, 0.92));
+      transition: all 180ms ease;
+    }
+
+    .flight-content:hover {
+      border-color: rgba(255, 196, 2, 0.45);
+      background: linear-gradient(160deg, rgba(255, 196, 2, 0.12), rgba(16, 16, 16, 0.96));
+    }
+
+    .flight-title {
+      margin: 0 0 10px;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+    }
+
+    .flight-description {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .flight-link {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: rgba(255, 196, 2, 0.15);
+      border: 1px solid rgba(255, 196, 2, 0.3);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 180ms ease;
+    }
+
+    .flight-link:hover {
+      background: rgba(255, 196, 2, 0.25);
+      border-color: rgba(255, 196, 2, 0.6);
+      text-decoration: none;
+    }
+
     @media (max-width: 900px) {
       .hero-topline {
         align-items: flex-start;
@@ -950,6 +1003,17 @@
           <h3 class="pizzint-title">五角大楼周边披萨店</h3>
           <p class="pizzint-description">实时监测五角大楼周边披萨店的动态与信息</p>
           <a href="https://pizzint.watch/" target="_blank" rel="noreferrer" class="pizzint-link">访问 pizzint.watch →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel main-section">
+      <h2>全球航班动态</h2>
+      <div class="flight-card">
+        <div class="flight-content">
+          <h3 class="flight-title">全球航班动态</h3>
+          <p class="flight-description">实时监测全球航班动态与航空信息</p>
+          <a href="https://flight-viz.com/" target="_blank" rel="noreferrer" class="flight-link">访问 flight-viz.com →</a>
         </div>
       </div>
     </section>
